@@ -1,27 +1,40 @@
+/* app/globals.css dans atlantic-drones-v2 */
+
+/* --- CORRECTION : Utiliser la bonne syntaxe @tailwind --- */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* -------------------------------------------------------- */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    color: rgb(17 24 39);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+@layer components {
+    .btn-primary {
+        padding: 0.75rem 1.5rem;
+        background-color: rgb(153 27 27); /* bg-red-800 */
+        color: white;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+    .btn-primary:hover {
+        background-color: rgb(185 28 28); /* bg-red-900 */
+    }
+    
+    /* Bouton Bleu */
+    .btn-secondary {
+        padding: 0.75rem 1.5rem;
+        background-color: rgb(30 58 138); /* bg-blue-900 */
+        color: white;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+    .btn-secondary:hover {
+        background-color: rgb(29 78 216); /* bg-blue-700 */
+    }
 }
