@@ -38,7 +38,7 @@ export default async function RealisationsPage() {
 
       <footer className="bg-blue-950 border-t border-blue-900 text-slate-300 py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-             <span className="text-white">© 2024 ATLANTIC DRONES</span>
+             <span className="text-white">© 2026 ATLANTIC DRONES</span>
         </div>
       </footer>
     </div>

@@ -212,7 +212,7 @@ export default function Home() {
                 <a href="tel:+33660770402" className="border border-white/20 text-white px-8 py-4 rounded-lg font-bold hover:bg-white/10 transition flex items-center justify-center">06 60 77 04 02</a>
             </div>
             <div className="mt-12 pt-8 border-t border-white/10 text-sm flex justify-center gap-8">
-                <span>© 2025 ATLANTIC DRONES</span>
+                <span>© 2026 ATLANTIC DRONES</span>
                 <span>Télépilote Pro DGAC</span>
             </div>
         </div>
