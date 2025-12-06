@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, X, ExternalLink, Calendar } from 'lucide-react';
+import { Play, X, ExternalLink, Calendar, Image as ImageIcon, ChevronDown } from 'lucide-react';
 
 interface Project {
   id: string;
@@ -20,7 +20,6 @@ interface Project {
   Images?: any[];
 }
 
-// 1. PALETTE DE COULEURS ÉTENDUE (Badges + Filtres)
 const getThemeStyles = (theme: string) => {
   const t = theme?.toLowerCase() || 'blue';
 
@@ -28,31 +27,31 @@ const getThemeStyles = (theme: string) => {
     case 'red':
       return {
         badge: 'bg-red-100 text-red-800 border-red-200',
-        borderHover: 'group-hover:border-red-800',
+        // CORRECTION : 'hover:' direct au lieu de 'group-hover:' pour garantir le changement
+        borderHover: 'hover:border-red-800', 
         icon: 'text-red-700',
-        iconBg: 'bg-white',
-        // Styles spécifiques aux FILTRES
         filterActive: 'bg-red-800 text-white shadow-md shadow-red-900/20',
         filterInactive: 'hover:text-red-800 hover:border-red-800',
+        scrollBtn: 'text-red-700 bg-red-50 hover:bg-red-100'
       };
     case 'green':
       return {
         badge: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-        borderHover: 'group-hover:border-emerald-700',
+        borderHover: 'hover:border-emerald-700',
         icon: 'text-emerald-700',
-        iconBg: 'bg-white',
         filterActive: 'bg-emerald-700 text-white shadow-md shadow-emerald-900/20',
         filterInactive: 'hover:text-emerald-700 hover:border-emerald-700',
+        scrollBtn: 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100'
       };
     case 'blue':
     default:
       return {
         badge: 'bg-blue-100 text-blue-900 border-blue-200',
-        borderHover: 'group-hover:border-blue-900',
+        borderHover: 'hover:border-blue-900',
         icon: 'text-blue-900',
-        iconBg: 'bg-white',
         filterActive: 'bg-blue-900 text-white shadow-md shadow-blue-900/20',
         filterInactive: 'hover:text-blue-900 hover:border-blue-900',
+        scrollBtn: 'text-blue-900 bg-blue-50 hover:bg-blue-100'
       };
   }
 };
@@ -61,30 +60,31 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState('Tous');
 
-  // 2. LOGIQUE INTELLIGENTE
-  // On liste les catégories ET on associe leur couleur (en prenant le 1er projet trouvé)
   const categoriesData = useMemo(() => {
     const uniqueCats = Array.from(new Set(projects.map((p) => p.Category).filter(Boolean)));
-    
     return uniqueCats.map(cat => {
-      // On trouve un projet de cette catégorie pour récupérer son Thème (red, blue, etc.)
       const exampleProject = projects.find(p => p.Category === cat);
       const theme = exampleProject ? exampleProject.Theme : 'blue';
       return { name: cat, theme: theme };
     });
   }, [projects]);
 
-  // Filtrage
   const filteredProjects = activeFilter === 'Tous' 
     ? projects 
     : projects.filter((p) => p.Category === activeFilter);
 
+  const scrollToGallery = () => {
+    const galleryElement = document.getElementById('project-gallery');
+    if (galleryElement) {
+      galleryElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="py-16 px-4 max-w-7xl mx-auto bg-slate-50">
       
-      {/* --- FILTRES COLORÉS --- */}
+      {/* FILTRES */}
       <div className="flex flex-wrap justify-center gap-4 mb-12">
-        {/* Bouton TOUS (Reste Bleu Nuit standard) */}
         <button
           onClick={() => setActiveFilter('Tous')}
           className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 border ${
@@ -96,19 +96,17 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           Tous
         </button>
 
-        {/* Boutons CATÉGORIES (Couleur Dynamique) */}
         {categoriesData.map((cat) => {
           const styles = getThemeStyles(cat.theme);
           const isActive = activeFilter === cat.name;
-
           return (
             <button
               key={cat.name}
               onClick={() => setActiveFilter(cat.name)}
               className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 border ${
                 isActive
-                  ? `${styles.filterActive} scale-105 border-transparent` // Actif = Fond coloré
-                  : `bg-white text-slate-600 border-slate-200 ${styles.filterInactive}` // Inactif = Texte coloré au survol
+                  ? `${styles.filterActive} scale-105 border-transparent`
+                  : `bg-white text-slate-600 border-slate-200 ${styles.filterInactive}`
               }`}
             >
               {cat.name}
@@ -117,12 +115,13 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
         })}
       </div>
 
-      {/* --- GRILLE --- */}
+      {/* GRILLE */}
       <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <AnimatePresence>
           {filteredProjects.map((project) => {
             const styles = getThemeStyles(project.Theme);
             const imageUrl = project.Images && project.Images.length > 0 ? project.Images[0].url : null;
+            const hasGallery = project.Images && project.Images.length > 0 && !project.IsVideo;
 
             return (
               <motion.div
@@ -133,16 +132,12 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 key={project.id}
                 layoutId={project.id}
                 onClick={() => setSelectedId(project.id)}
-                className={`cursor-pointer group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-2 border-transparent ${styles.borderHover}`}
+                // ICI : border-2 gris clair par défaut, qui devient coloré au survol grâce à styles.borderHover
+                className={`cursor-pointer group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-2 border-slate-100 ${styles.borderHover}`}
               >
-                {/* Image */}
                 <div className="aspect-video relative overflow-hidden bg-slate-200">
                   {imageUrl ? (
-                    <img
-                      src={imageUrl}
-                      alt={project.Title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                    <img src={imageUrl} alt={project.Title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-slate-400 bg-slate-100 text-xs">Pas d'image</div>
                   )}
@@ -151,16 +146,20 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                       <Calendar size={12} /> {project.Year}
                   </div>
 
+                  {/* OVERLAY ICONES (Discrétion : bg-white/30) */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    {project.IsVideo && (
-                      <div className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg scale-90 group-hover:scale-110 transition-transform ${styles.iconBg} ${styles.icon}`}>
-                        <Play fill="currentColor" size={24} />
+                    {project.IsVideo ? (
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transition-all duration-300 scale-100 group-hover:scale-110 bg-white/30 group-hover:bg-white/90 ${styles.icon}`}>
+                        <Play fill="currentColor" size={20} className="opacity-80 group-hover:opacity-100" />
                       </div>
-                    )}
+                    ) : hasGallery ? (
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transition-all duration-300 scale-100 group-hover:scale-110 bg-white/30 group-hover:bg-white/90 ${styles.icon}`}>
+                        <ImageIcon size={20} className="opacity-80 group-hover:opacity-100" />
+                      </div>
+                    ) : null}
                   </div>
                 </div>
 
-                {/* Texte */}
                 <div className="p-6">
                   <div className="flex flex-wrap gap-2 mb-3 items-center">
                     <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider border ${styles.badge}`}>
@@ -170,13 +169,8 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                       {project.Type}
                     </span>
                   </div>
-
-                  <h3 className="text-xl font-extrabold text-slate-900 mb-2 line-clamp-1 group-hover:text-blue-900 transition-colors">
-                      {project.Title}
-                  </h3>
-                  <p className="text-slate-600 text-sm line-clamp-2 leading-relaxed">
-                      {project.ShortDescription}
-                  </p>
+                  <h3 className="text-xl font-extrabold text-slate-900 mb-2 line-clamp-1 group-hover:text-blue-900 transition-colors">{project.Title}</h3>
+                  <p className="text-slate-600 text-sm line-clamp-2 leading-relaxed">{project.ShortDescription}</p>
                 </div>
               </motion.div>
             );
@@ -203,7 +197,11 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 const project = projects.find((p) => p.id === selectedId);
                 if (!project) return null;
                 const styles = getThemeStyles(project.Theme);
-                const imageUrl = project.Images && project.Images.length > 0 ? project.Images[0].url : null;
+                
+                const allImages = project.Images || [];
+                const mainImage = allImages.length > 0 ? allImages[0].url : null;
+                const galleryImages = project.IsVideo ? allImages : allImages.slice(1);
+                const hasGalleryContent = galleryImages.length > 0;
 
                 return (
                   <div>
@@ -222,50 +220,60 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                           allowFullScreen
                           allow="autoplay; encrypted-media"
                         ></iframe>
-                      ) : imageUrl ? (
-                        <img src={imageUrl} alt={project.Title} className="w-full h-full object-cover" />
+                      ) : mainImage ? (
+                        <img src={mainImage} alt={project.Title} className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-white">Image non disponible</div>
                       )}
                     </div>
 
                     <div className="p-8">
-                      <div className="flex items-center gap-3 mb-4">
-                         <span className={`px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border ${styles.badge}`}>
-                            {project.Category}
-                         </span>
-                         <span className="text-slate-400 text-sm flex items-center gap-1">
-                            <Calendar size={14}/> {project.Year}
-                         </span>
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex items-center gap-3">
+                           <span className={`px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border ${styles.badge}`}>
+                              {project.Category}
+                           </span>
+                           <span className="text-slate-400 text-sm flex items-center gap-1">
+                              <Calendar size={14}/> {project.Year}
+                           </span>
+                        </div>
+
+                        {hasGalleryContent && (
+                          <button 
+                            onClick={scrollToGallery}
+                            className={`flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full transition ${styles.scrollBtn}`}
+                          >
+                            <ImageIcon size={14} /> Voir la galerie <ChevronDown size={14} />
+                          </button>
+                        )}
                       </div>
 
                       <h2 className="text-3xl font-extrabold text-slate-900 mb-4">{project.Title}</h2>
-                      
                       <div className="prose prose-slate max-w-none text-slate-600 mb-8">
                           <p className="text-lg leading-relaxed">{project.ShortDescription}</p>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-slate-100 bg-slate-50 p-6 rounded-xl">
-                          {project.Challenge && (
-                              <div>
-                                  <h4 className={`font-bold mb-2 flex items-center gap-2 ${styles.icon}`}>Challenge</h4>
-                                  <p className="text-sm text-slate-600">{project.Challenge}</p>
-                              </div>
-                          )}
-                          {project.Solution && (
-                              <div>
-                                  <h4 className={`font-bold mb-2 flex items-center gap-2 ${styles.icon}`}>Solution</h4>
-                                  <p className="text-sm text-slate-600">{project.Solution}</p>
-                              </div>
-                          )}
-                          {project.Technique && (
-                              <div>
-                                  <h4 className={`font-bold mb-2 flex items-center gap-2 ${styles.icon}`}>Matériel</h4>
-                                  <p className="text-sm text-slate-600">{project.Technique}</p>
-                              </div>
-                          )}
+                          {project.Challenge && <div><h4 className={`font-bold mb-2 flex items-center gap-2 ${styles.icon}`}>Challenge</h4><p className="text-sm text-slate-600">{project.Challenge}</p></div>}
+                          {project.Solution && <div><h4 className={`font-bold mb-2 flex items-center gap-2 ${styles.icon}`}>Solution</h4><p className="text-sm text-slate-600">{project.Solution}</p></div>}
+                          {project.Technique && <div><h4 className={`font-bold mb-2 flex items-center gap-2 ${styles.icon}`}>Matériel</h4><p className="text-sm text-slate-600">{project.Technique}</p></div>}
                       </div>
                       
+                      {hasGalleryContent && (
+                        <div id="project-gallery" className="mt-8 pt-8 border-t border-slate-100 scroll-mt-4">
+                            <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                <ImageIcon className="text-slate-400"/> Galerie Photos
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {galleryImages.map((img: any, idx: number) => (
+                                    <div key={idx} className="rounded-xl overflow-hidden h-64 border border-slate-100 shadow-sm hover:shadow-md transition bg-slate-50">
+                                        <img src={img.url} alt={`${project.Title} ${idx + 2}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                      )}
+
                       {project.VideoURL && (
                          <div className="mt-8 pt-6 border-t border-slate-100 text-center">
                              <a href={project.VideoURL} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 font-bold px-6 py-3 rounded-lg transition hover:bg-slate-50 ${styles.icon}`}>
