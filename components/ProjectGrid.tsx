@@ -27,12 +27,12 @@ const getThemeStyles = (theme: string) => {
     case 'red':
       return {
         badge: 'bg-red-100 text-red-800 border-red-200',
-        // CORRECTION BORDURE : On force la couleur au survol avec !important via la classe
+        // BORDURE : On garde le correctif qui marche (hover direct)
         borderHover: 'hover:border-red-800 hover:ring-1 hover:ring-red-800',
         icon: 'text-red-700',
         filterActive: 'bg-red-800 text-white shadow-md shadow-red-900/20',
         filterInactive: 'hover:text-red-800 hover:border-red-800',
-        scrollBtn: 'text-red-800 bg-red-100 hover:bg-red-200'
+        scrollBtn: 'text-red-800 bg-red-50 hover:bg-red-200 border-red-100'
       };
     case 'green':
       return {
@@ -41,7 +41,7 @@ const getThemeStyles = (theme: string) => {
         icon: 'text-emerald-700',
         filterActive: 'bg-emerald-700 text-white shadow-md shadow-emerald-900/20',
         filterInactive: 'hover:text-emerald-700 hover:border-emerald-700',
-        scrollBtn: 'text-emerald-800 bg-emerald-100 hover:bg-emerald-200'
+        scrollBtn: 'text-emerald-800 bg-emerald-50 hover:bg-emerald-200 border-emerald-100'
       };
     case 'blue':
     default:
@@ -51,7 +51,7 @@ const getThemeStyles = (theme: string) => {
         icon: 'text-blue-900',
         filterActive: 'bg-blue-900 text-white shadow-md shadow-blue-900/20',
         filterInactive: 'hover:text-blue-900 hover:border-blue-900',
-        scrollBtn: 'text-blue-900 bg-blue-100 hover:bg-blue-200'
+        scrollBtn: 'text-blue-900 bg-blue-50 hover:bg-blue-200 border-blue-100'
       };
   }
 };
@@ -122,7 +122,6 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             const styles = getThemeStyles(project.Theme);
             const imageUrl = project.Images && project.Images.length > 0 ? project.Images[0].url : null;
             
-            // Logique simplifiée : S'il y a une image, on affiche l'icone correspondante
             const showVideoIcon = project.IsVideo;
             const showGalleryIcon = !project.IsVideo && project.Images && project.Images.length > 0;
 
@@ -135,7 +134,6 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 key={project.id}
                 layoutId={project.id}
                 onClick={() => setSelectedId(project.id)}
-                // CORRECTION BORDURE : border-2 transparent par défaut, couleur au survol
                 className={`cursor-pointer group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-2 border-transparent ${styles.borderHover}`}
               >
                 <div className="aspect-video relative overflow-hidden bg-slate-200">
@@ -149,15 +147,17 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                       <Calendar size={12} /> {project.Year}
                   </div>
 
-                  {/* OVERLAY ICONES - CORRIGÉ : Visible sur mobile (bg-white/80), Plus grand sur Desktop */}
+                  {/* OVERLAY ICONES (CORRIGÉ : Transparence et Flou Légers) */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
                     {showVideoIcon ? (
-                      <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transition-transform duration-300 group-hover:scale-110 bg-white/90 ${styles.icon}`}>
-                        <Play fill="currentColor" size={24} />
+                      // bg-white/20 (20% opacité) par défaut + backdrop-blur-sm (flou léger) = Effet Verre
+                      // group-hover:bg-white = Blanc solide au survol (PC)
+                      <div className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transition-all duration-300 scale-100 group-hover:scale-110 bg-white/20 group-hover:bg-white ${styles.icon}`}>
+                        <Play fill="currentColor" size={24} className="opacity-90 group-hover:opacity-100" />
                       </div>
                     ) : showGalleryIcon ? (
-                      <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transition-transform duration-300 group-hover:scale-110 bg-white/90 ${styles.icon}`}>
-                        <ImageIcon size={24} />
+                      <div className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transition-all duration-300 scale-100 group-hover:scale-110 bg-white/20 group-hover:bg-white ${styles.icon}`}>
+                        <ImageIcon size={24} className="opacity-90 group-hover:opacity-100" />
                       </div>
                     ) : null}
                   </div>
@@ -203,15 +203,11 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 
                 const allImages = project.Images || [];
                 const mainImage = allImages.length > 0 ? allImages[0].url : null;
-                
-                // LOGIQUE GALERIE SÉCURISÉE
-                // Si c'est une vidéo : on montre toutes les images en bas (s'il y en a)
-                // Si c'est des photos : la 1ère est en haut, on montre TOUTES les autres en bas
                 const galleryImages = project.IsVideo ? allImages : allImages.slice(1);
                 const hasGalleryContent = galleryImages.length > 0;
 
                 return (
-                  <div>
+                  <div className="pb-20">
                     <button
                       onClick={(e) => { e.stopPropagation(); setSelectedId(null); }}
                       className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full z-20 transition"
@@ -234,9 +230,8 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                       )}
                     </div>
 
-                    <div className="p-8">
-                      {/* EN-TÊTE AVEC BOUTON GALERIE */}
-                      <div className="flex flex-wrap justify-between items-start mb-6 gap-4">
+                    <div className="p-6 md:p-8">
+                      <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-6">
                         <div className="flex items-center gap-3">
                            <span className={`px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border ${styles.badge}`}>
                               {project.Category}
@@ -246,20 +241,20 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                            </span>
                         </div>
 
-                        {/* Bouton GALERIE (Visible et coloré) */}
+                        {/* BOUTON GALERIE (Toujours visible si galerie) */}
                         {hasGalleryContent && (
                           <button 
                             onClick={scrollToGallery}
-                            className={`flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-full transition shadow-sm ${styles.scrollBtn}`}
+                            className={`w-full md:w-auto flex justify-center items-center gap-2 text-xs font-bold px-4 py-3 rounded-lg transition border shadow-sm ${styles.scrollBtn}`}
                           >
                             <ImageIcon size={16} /> Voir la galerie ({galleryImages.length}) <ChevronDown size={16} />
                           </button>
                         )}
                       </div>
 
-                      <h2 className="text-3xl font-extrabold text-slate-900 mb-4">{project.Title}</h2>
+                      <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-4">{project.Title}</h2>
                       <div className="prose prose-slate max-w-none text-slate-600 mb-8">
-                          <p className="text-lg leading-relaxed">{project.ShortDescription}</p>
+                          <p className="text-base md:text-lg leading-relaxed">{project.ShortDescription}</p>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-slate-100 bg-slate-50 p-6 rounded-xl">
@@ -268,10 +263,9 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                           {project.Technique && <div><h4 className={`font-bold mb-2 flex items-center gap-2 ${styles.icon}`}>Matériel</h4><p className="text-sm text-slate-600">{project.Technique}</p></div>}
                       </div>
                       
-                      {/* ZONE GALERIE */}
                       {hasGalleryContent && (
-                        <div id="project-gallery" className="mt-8 pt-8 border-t border-slate-100 scroll-mt-4">
-                            <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <div id="project-gallery" className="mt-12 pt-8 border-t-2 border-slate-100 scroll-mt-4">
+                            <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                                 <ImageIcon className="text-slate-400"/> Galerie Photos
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

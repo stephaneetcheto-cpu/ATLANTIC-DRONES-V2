@@ -21,7 +21,7 @@ export default function Home() {
                     <a href="#services" className="text-slate-300 hover:text-white font-medium transition">Expertise</a>
                     <Link href="/realisations" className="text-slate-300 hover:text-white font-medium transition">Réalisations</Link>
                     <Link href="/formation" className="text-slate-300 hover:text-white font-medium transition">Formation</Link>
-                    <a href="#histoire" className="text-slate-300 hover:text-white font-medium transition">L&aposAgence</a>
+                    <a href="#histoire" className="text-slate-300 hover:text-white font-medium transition">L&apos;Agence</a>
                     <Link href="/contact" className="bg-red-800 text-white px-5 py-2.5 rounded-md font-semibold hover:bg-red-900 transition shadow-lg shadow-red-900/30">
                         Contact
                     </Link>
@@ -47,19 +47,19 @@ export default function Home() {
             <div className="max-w-xl">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-sm font-medium mb-6 backdrop-blur-sm">
                     <span className="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
                     </span>
                     Basé au Pays Basque & Landes
                 </div>
                 
                 <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6 drop-shadow-xl">
-                    L&aposExpertise de l&aposImage <br/>
+                    L&apos;Expertise de l&apos;Image <br/>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-white">Aérienne & Sol</span>
                 </h1>
                 
                 <p className="text-lg md:text-xl text-slate-100 mb-8 leading-relaxed drop-shadow-md font-medium">
-                    Nous accompagnons les <strong>entreprises</strong>, les <strong>collectivités</strong>, les acteurs du <strong>BTP</strong> et de l&apos<strong>immobilier</strong> avec une production globale :<br/>
+                    Nous accompagnons les <strong>entreprises</strong>, les <strong>collectivités</strong>, les acteurs du <strong>BTP</strong> et de l&apos;<strong>immobilier</strong> avec une production globale :<br/>
                     <span className="text-white font-bold mt-2 block drop-shadow-lg">Photo | Vidéo | Timelapse | Topographie | Innovation 3D.</span>
                 </p>
                 
@@ -92,7 +92,7 @@ export default function Home() {
                 <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">FILMER, MESURER, VALORISER.</h2>
                 <div className="w-24 h-1 bg-red-800 mx-auto rounded mb-6"></div>
                 <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                    Des solutions complètes, de l&aposimage créative à la donnée technique.
+                    Des solutions complètes, de l&apos;image créative à la donnée technique.
                 </p>
             </div>
 
@@ -104,7 +104,7 @@ export default function Home() {
                     <h3 className="text-2xl font-bold text-slate-900 mb-3">Reportage Photo & Vidéo</h3>
                     <p className="text-sm font-bold text-blue-900 mb-3 uppercase tracking-wide">Communication Corporate & Institutionnelle</p>
                     <p className="text-slate-600 mb-6 leading-relaxed">
-                        Nous réalisons vos films d&aposentreprise et reportages territoriaux avec une écriture visuelle soignée. Une approche narrative complète (Sol & Drone) pour valoriser votre image.
+                        Nous réalisons vos films d&apos;entreprise et reportages territoriaux avec une écriture visuelle soignée. Une approche narrative complète (Sol & Drone) pour valoriser votre image.
                     </p>
                     <Link href="/realisations" className="inline-flex items-center text-blue-900 font-semibold hover:text-blue-700">Voir les reportages <ArrowRight className="ml-1" size={16} /></Link>
                 </div>
@@ -114,9 +114,9 @@ export default function Home() {
                         <Clock size={32} />
                     </div>
                     <h3 className="text-2xl font-bold text-slate-900 mb-3">Vidéo Timelapse & Suivi</h3>
-                    <p class="text-sm font-bold text-red-800 mb-3 uppercase tracking-wide">Le gardien du temps de vos projets</p>
-                    <p class="text-slate-600 mb-6 leading-relaxed">
-                        Nous installons des boîtiers autonomes et connectés pour suivre l&aposévolution de vos constructions. Nous livrons un film promotionnel dynamique retraçant l&aposintégralité du chantier.
+                    <p className="text-sm font-bold text-red-800 mb-3 uppercase tracking-wide">Le gardien du temps de vos projets</p>
+                    <p className="text-slate-600 mb-6 leading-relaxed">
+                        Nous installons des boîtiers autonomes et connectés pour suivre l&apos;évolution de vos constructions. Nous livrons un film promotionnel dynamique retraçant l&apos;intégralité du chantier.
                     </p>
                     <Link href="/realisations" className="inline-flex items-center text-red-800 font-semibold hover:text-red-700">Voir un exemple <ArrowRight className="ml-1" size={16} /></Link>
                 </div>
@@ -126,9 +126,9 @@ export default function Home() {
                         <Map size={32} />
                     </div>
                     <h3 className="text-2xl font-bold text-slate-900 mb-3">Topographie & LiDAR</h3>
-                    <p class="text-sm font-bold text-red-800 mb-3 uppercase tracking-wide">Relevés Techniques de Précision</p>
-                    <p class="text-slate-600 mb-6 leading-relaxed">
-                        L&aposADN historique de la société. Nous déployons une chaîne de mesure hybride (Station totale, GPS, Drone LiDAR) pour fournir des données fiables aux géomètres-experts.
+                    <p className="text-sm font-bold text-red-800 mb-3 uppercase tracking-wide">Relevés Techniques de Précision</p>
+                    <p className="text-slate-600 mb-6 leading-relaxed">
+                        L&apos;ADN historique de la société. Nous déployons une chaîne de mesure hybride (Station totale, GPS, Drone LiDAR) pour fournir des données fiables aux géomètres-experts.
                     </p>
                     <Link href="/realisations" className="inline-flex items-center text-red-800 font-semibold hover:text-red-700">Détails techniques <ArrowRight className="ml-1" size={16} /></Link>
                 </div>
@@ -138,9 +138,9 @@ export default function Home() {
                         <Brain size={32} />
                     </div>
                     <h3 className="text-2xl font-bold text-slate-900 mb-3">Innovation 3D & Immobilier</h3>
-                    <p class="text-sm font-bold text-blue-900 mb-3 uppercase tracking-wide">Immersion & Home Staging IA</p>
-                    <p class="text-slate-600 mb-6 leading-relaxed">
-                        Accélérez vos ventes. Grâce à l&aposIA et à l&aposinsertion 3D, nous donnons vie à vos maquettes 3D et transformons des biens vides ou en travaux en espaces de vie chaleureux.
+                    <p className="text-sm font-bold text-blue-900 mb-3 uppercase tracking-wide">Immersion & Home Staging IA</p>
+                    <p className="text-slate-600 mb-6 leading-relaxed">
+                        Accélérez vos ventes. Grâce à l&apos;IA et à l&apos;insertion 3D, nous donnons vie à vos maquettes 3D et transformons des biens vides ou en travaux en espaces de vie chaleureux.
                     </p>
                     <Link href="/realisations" className="inline-flex items-center text-blue-900 font-semibold hover:text-blue-700">Voir la démo IA <ArrowRight className="ml-1" size={16} /></Link>
                 </div>
@@ -159,11 +159,11 @@ export default function Home() {
                     <div className="inline-block px-3 py-1 bg-red-800 rounded-full text-xs font-bold uppercase tracking-wide mb-4 shadow-lg">Transmission</div>
                     <h2 className="text-3xl md:text-4xl font-bold mb-6">APPRENDRE LE PILOTAGE AVEC UN PROFESSIONNEL.</h2>
                     <p className="text-slate-300 text-lg mb-8">
-                        Passez de la théorie à la réalité du terrain. Bénéficiez d&aposune expérience acquise sur les tournages les plus exigeants (TV, Sport, Fiction) pour maîtriser l&aposart du cadrage et la sécurité des vols en conditions réelles.
+                        Passez de la théorie à la réalité du terrain. Bénéficiez d&apos;une expérience acquise sur les tournages les plus exigeants (TV, Sport, Fiction) pour maîtriser l&apos;art du cadrage et la sécurité des vols en conditions réelles.
                     </p>
                     <div className="mt-10">
                         <Link href="/formation" className="bg-red-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-900 transition shadow-lg inline-block">
-                            Découvrir le programme
+                            En savoir plus
                         </Link>
                     </div>
                 </div>
@@ -179,22 +179,22 @@ export default function Home() {
       {/* HISTOIRE */}
       <div id="histoire" className="py-24 bg-slate-50 relative">
         <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-12">DE LA TOPOGRAPHIE À L&aposÉMOTION DE L&aposIMAGE.</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-12">DE LA TOPOGRAPHIE À L&apos;ÉMOTION DE L&apos;IMAGE.</h2>
             <div className="space-y-8 text-left max-w-2xl mx-auto">
                 <div className="flex gap-6 items-start">
                     <span className="font-bold text-red-800 w-24 text-right flex-shrink-0">2014</span>
                     <p className="text-slate-600 border-l-2 border-red-800 pl-6">
-                        L&aposaventure commence en 2014 sur une base solide : la photogrammétrie technique, portée par <strong>François, ingénieur géomètre associé</strong>.
+                        L&apos;aventure commence en 2014 sur une base solide : la photogrammétrie technique, portée par <strong>François, ingénieur géomètre associé</strong>.
                     </p>
                 </div>
                 <div className="flex gap-6 items-start">
                     <span className="font-bold text-blue-900 w-24 text-right flex-shrink-0">Le Virage</span>
                     <p className="text-slate-600 border-l-2 border-slate-300 pl-6">
-                        La passion de l&aposimage a pris le dessus. En filmant la côte basque, nous avons développé une expertise narrative pour raconter des histoires complètes.
+                        La passion de l&apos;image a pris le dessus. En filmant la côte basque, nous avons développé une expertise narrative pour raconter des histoires complètes.
                     </p>
                 </div>
                 <div className="flex gap-6 items-start">
-                    <span className="font-bold text-slate-900 w-24 text-right flex-shrink-0">Aujourd&aposhui</span>
+                    <span className="font-bold text-slate-900 w-24 text-right flex-shrink-0">Aujourd&apos;hui</span>
                     <p className="text-slate-600 border-l-2 border-slate-300 pl-6">
                         Nous réunissons le meilleur des deux mondes : la rigueur de l&aposingénieur pour vos suivis techniques et la sensibilité du réalisateur pour votre communication.
                     </p>
