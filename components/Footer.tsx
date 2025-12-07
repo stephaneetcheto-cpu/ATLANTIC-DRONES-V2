@@ -1,97 +1,77 @@
-import Link from 'next/link'
-import { Mail, Phone, MapPin } from 'lucide-react'
+import Link from 'next/link';
+import { Phone, Instagram, Facebook, Linkedin } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* À propos */}
-          <div>
-            <h3 className="text-lg font-bold mb-4">Atlantic Drones</h3>
-            <p className="text-gray-400 text-sm">
-              Services de drones professionnels au Pays Basque. Photographie aérienne, 
-              vidéo, inspections techniques et relevés topographiques.
-            </p>
-          </div>
+    <footer className="bg-blue-950 border-t border-blue-900 text-slate-300 py-10">
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        
+        {/* TITRE */}
+        <h2 className="text-2xl md:text-3xl text-white font-bold mb-8">Un projet au Pays Basque ou dans les Landes ?</h2>
+        
+        {/* BOUTONS D'ACTION + RÉSEAUX SOCIAUX (Tout aligné) */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-10">
+            {/* Bouton Devis */}
+            <Link 
+              href="/contact" 
+              className="bg-red-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-900 transition shadow-lg shadow-red-900/30 text-sm md:text-base"
+            >
+              Demander un devis
+            </Link>
+            
+            {/* Bouton Tel */}
+            <a 
+              href="tel:+33660770402" 
+              className="border border-white/20 text-white px-6 py-3 rounded-lg font-bold hover:bg-white/10 transition flex items-center justify-center gap-2 text-sm md:text-base"
+            >
+               <Phone size={18} /> 06 60 77 04 02
+            </a>
 
-          {/* Navigation */}
-          <div>
-            <h3 className="text-lg font-bold mb-4">Navigation</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/" className="text-gray-400 hover:text-white transition">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="text-gray-400 hover:text-white transition">
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link href="/portfolio" className="text-gray-400 hover:text-white transition">
-                  Portfolio
-                </Link>
-              </li>
-              <li>
-                <Link href="/secteurs" className="text-gray-400 hover:text-white transition">
-                  Secteurs
-                </Link>
-              </li>
-              <li>
-                <Link href="/a-propos" className="text-gray-400 hover:text-white transition">
-                  À propos
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-400 hover:text-white transition">
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
+            {/* Séparateur vertical (visible uniquement sur ordi) */}
+            <div className="hidden md:block w-px h-10 bg-white/20 mx-2"></div>
 
-          {/* Services */}
-          <div>
-            <h3 className="text-lg font-bold mb-4">Nos Services</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>Photographie aérienne</li>
-              <li>Vidéo & cinématique</li>
-              <li>Inspections techniques</li>
-              <li>Relevés topographiques</li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-lg font-bold mb-4">Contact</h3>
-            <ul className="space-y-3 text-sm text-gray-400">
-              <li className="flex items-center gap-2">
-                <Phone size={16} />
-                <a href="tel:0660770402" className="hover:text-white transition">
-                  06 60 77 04 02
+            {/* Réseaux Sociaux */}
+            <div className="flex gap-6 items-center">
+                <a 
+                  href="https://www.instagram.com/atlanticdrones" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-slate-400 hover:text-white transition-colors transform hover:scale-110"
+                  aria-label="Instagram"
+                >
+                    <Instagram size={24} />
                 </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail size={16} />
-                <a href="mailto:contact@atlantic-drones.com" className="hover:text-white transition">
-                  contact@atlantic-drones.com
+                <a 
+                  href="https://www.facebook.com/atlanticdrones" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-slate-400 hover:text-white transition-colors transform hover:scale-110"
+                  aria-label="Facebook"
+                >
+                    <Facebook size={24} />
                 </a>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin size={16} className="mt-1" />
-                <span>Biarritz, Pays Basque<br />France</span>
-              </li>
-            </ul>
-          </div>
+                <a 
+                  href="https://www.linkedin.com/company/atlantic-drones" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-slate-400 hover:text-white transition-colors transform hover:scale-110"
+                  aria-label="LinkedIn"
+                >
+                    <Linkedin size={24} />
+                </a>
+            </div>
         </div>
 
-        {/* Copyright */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Atlantic Drones. Tous droits réservés.</p>
+        {/* COPYRIGHT (Plus discret) */}
+        <div className="text-xs text-slate-500 flex flex-col md:flex-row justify-center gap-2 md:gap-6 pt-6 border-t border-white/5">
+            <span>© 2026 ATLANTIC DRONES</span>
+            <span className="hidden md:inline">•</span>
+            <span>Télépilote Pro DGAC</span>
+            <span className="hidden md:inline">•</span>
+            <Link href="/mentions-legales" className="hover:text-slate-300 transition">Mentions Légales</Link>
         </div>
+
       </div>
     </footer>
-  )
+  );
 }

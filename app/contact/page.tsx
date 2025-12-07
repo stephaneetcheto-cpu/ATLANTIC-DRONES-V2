@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+// IMPORT DU NOUVEAU COMPOSANT
+import Footer from '@/components/Footer';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -144,23 +146,8 @@ export default function ContactPage() {
           </div>
         </div>
       </main>
-
-      {/* FOOTER (AJOUTÉ) */}
-      <footer className="bg-blue-950 border-t border-blue-900 text-slate-300 py-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-            <h2 className="text-3xl text-white font-bold mb-6">Un projet au Pays Basque ou dans les Landes ?</h2>
-            <div className="flex justify-center gap-4 mt-8">
-                <a href="tel:+33660770402" className="bg-red-800 text-white px-10 py-4 rounded-lg font-bold hover:bg-red-900 transition shadow-lg shadow-red-900/30 flex items-center justify-center text-lg">
-                   <Phone className="w-5 h-5 mr-2" /> 06 60 77 04 02
-                </a>
-            </div>
-            <div className="mt-12 pt-8 border-t border-white/10 text-sm flex justify-center gap-8">
-                <span>© 2026 ATLANTIC DRONES</span>
-                <span>Télépilote Pro DGAC</span>
-            </div>
-        </div>
-      </footer>
-
+      {/* FOOTER INTÉGRÉ VIA LE COMPOSANT */}
+      <Footer />
     </div>
   );
 }

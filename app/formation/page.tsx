@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { Award, Camera, Plane, Users, CheckCircle, ArrowLeft, ShieldCheck, Phone } from 'lucide-react';
+// IMPORT DU FOOTER
+import Footer from '@/components/Footer';
 
 export default function FormationPage() {
   return (
@@ -57,7 +59,7 @@ export default function FormationPage() {
                     <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-800 mb-4">
                         <Camera size={24} />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">L'Oeil du Réalisateur</h3>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">L&apos;Oeil du Réalisateur</h3>
                     <p className="text-slate-600 text-sm">
                         Savoir piloter ne suffit pas. Nous vous apprenons à composer une image, gérer la lumière et réaliser des mouvements fluides "cinématiques".
                     </p>
@@ -86,22 +88,9 @@ export default function FormationPage() {
         </div>
       </section>
 
-    
 
-      {/* FOOTER */}
-      <footer className="bg-blue-950 border-t border-blue-900 text-slate-300 py-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-            <h2 className="text-3xl text-white font-bold mb-6">Prêt à prendre les commandes ?</h2>
-            <div className="flex justify-center gap-4 mt-8">
-                <Link href="/contact" className="bg-red-800 text-white px-8 py-4 rounded-lg font-bold hover:bg-red-900 transition">Demander un devis</Link>
-                <a href="tel:+33660770402" className="border border-white/20 text-white px-8 py-4 rounded-lg font-bold hover:bg-white/10 transition flex items-center justify-center">06 60 77 04 02</a>
-            </div>
-            <div className="mt-12 pt-8 border-t border-white/10 text-sm flex justify-center gap-8">
-                <span>© 2026 ATLANTIC DRONES</span>
-                <span>Télépilote Pro DGAC</span>
-            </div>
-        </div>
-      </footer>
+      {/* FOOTER INTÉGRÉ */}
+      <Footer />
 
     </div>
   );
